@@ -11,7 +11,7 @@ const eventSchema = new mongoose.Schema({
   eventDescription: { type: String },
 });
 const kindredSchema = new mongoose.Schema({
-  kindredName: { type: Date, required: true, unique: true },
+  name: { type: Date, required: true, unique: true },
   date: { type: Date }, //most recent interaction date
   health: { type: Number },
   events: [eventSchema], //will hold multiple eventSchema objects

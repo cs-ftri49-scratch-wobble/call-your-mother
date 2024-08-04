@@ -8,8 +8,8 @@ const kindredController = {};
 
 //creates kindred. user provides name in request body
 kindredController.createKindred = async (req, res, next) => {
-  const { kindredName, date } = req.body;
-  if (!kindredName) {
+  const { name, date } = req.body;
+  if (!name) {
     return next({
       log: 'Name needed.',
       status: 400,
@@ -18,7 +18,7 @@ kindredController.createKindred = async (req, res, next) => {
   }
   try {
     const kindred = await Kindred.create({
-      kindredName: kindredName,
+      name: name,
     });
     res.status(200).json(`Kindred created: ${kindred}`);
   } catch (err) {
@@ -31,11 +31,11 @@ kindredController.createKindred = async (req, res, next) => {
 };
 
 //finds kindred. this middleware is used right before the updating middleware
-//router.get('/kindred/:kindredName', kindredController.findKindred)
+//router.get('/kindred/:name', kindredController.findKindred)
 (kindredController.findKindred = async (req, res, next) => {
   try {
-    const { kindredName } = req.params;
-    if (!kindredName) {
+    const { name } = req.params;
+    if (!name) {
       return next({
         log: 'Kindred name needed.',
         status: 400,
@@ -43,7 +43,7 @@ kindredController.createKindred = async (req, res, next) => {
       });
     }
     const kindred = await Kindred.findOne({
-      kindredName: kindredName,
+      name: name,
     });
     if (!kindred) {
       return next({
@@ -63,13 +63,13 @@ kindredController.createKindred = async (req, res, next) => {
   }
 }),
   //deletes kindred. user provides name in request body
-  //app.delete('/kindred/:kindredName', kindredController.findKindred, kindredController.deleteKindred);
+  //app.delete('/kindred/:name', kindredController.findKindred, kindredController.deleteKindred);
   (kindredController.deleteKindred = async (req, res, next) => {
     const kindred = res.locals.kindred;
     try {
       await Kindred.deleteOne({ _id: kindred._id });
       res.status(200).json({
-        message: `${kindred.kindredName} profile deleted.`,
+        message: `${kindred.name} profile deleted.`,
       });
     } catch (err) {
       next({
@@ -81,7 +81,7 @@ kindredController.createKindred = async (req, res, next) => {
   });
 
 //adds Date to kindred, also calculates health and returns it
-//router.post('/kindred/:kindredName/updateHealth', kindredController.findKindred, kindredController.addDate, kindredController.updateHealth);
+//router.post('/kindred/:name/updateHealth', kindredController.findKindred, kindredController.addDate, kindredController.updateHealth);
 kindredController.addDate = async (req, res, next) => {
   const { date } = req.body;
   if (!date) {
