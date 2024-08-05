@@ -11,12 +11,13 @@ const eventSchema = new mongoose.Schema({
   eventDescription: { type: String },
 });
 const kindredSchema = new mongoose.Schema({
-  lastInteractedDate: { type: Date, required: true },
+  name: { type: Date, required: true, unique: true },
+  date: { type: Date }, //most recent interaction date
+  health: { type: Number },
   events: [eventSchema], //will hold multiple eventSchema objects
-  relationLabel: [{ type: String }], //setting isn't a way to make relationshipLabel required, only that all relationLabel within the array must be non empty strings
-  relationRole: [{ type: String }],
-  relationHealth: { type: String },
-  relationGoals: [{ type: String }],
+  label: [{ type: String }], //setting isn't a way to make relationshipLabel required, only that all relationLabel within the array must be non empty strings
+  role: [{ type: String }],
+  goals: [{ type: String }],
   suggestions: [{ type: String }],
   birthday: { type: Date },
 });

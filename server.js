@@ -9,7 +9,7 @@ const authRoutes = require('./routes/authRoutes');
 const sessionRoutes = require('./routes/sessionRoutes');
 
 const app = express();
-const PORT = 5000;
+const PORT = 5100;
 
 // Middleware
 app.use(cors()); // Enable CORS
@@ -19,9 +19,10 @@ app.use(cookieParser());
 
 //MongoDB connection
 const mongoURI = process.env.MONGO_URI;
-mongoose.connect(mongoURI)
-.then(() => console.log('MongoDB connected'))
-.catch(err => console.log(err));
+mongoose
+  .connect(mongoURI)
+  .then(() => console.log('MongoDB connected'))
+  .catch((err) => console.log(err));
 
 // Routes
 app.use('/auth', authRoutes); // Auth routes
@@ -34,9 +35,8 @@ app.use((req, res) => res.sendStatus(404));
 const defaultErr = {
   log: 'Express error handler caught unknown middleware error',
   status: 500,
-  message: { err: 'An error occurred' }
+  message: { err: 'An error occurred' },
 };
-
 
 app.use((err, req, res, next) => {
   const errorObj = Object.assign({}, defaultErr, err);
@@ -46,5 +46,5 @@ app.use((err, req, res, next) => {
 
 // Start the server
 app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`)
+  console.log(`Server listening on port ${PORT}`);
 });
