@@ -1,9 +1,7 @@
 const express = require('express');
-const router = express.Router();
 const sessionController = require('../controllers/sessionController');
+const router = express.Router();
 
-router.post('/start', sessionController.startSession);
-router.post('/end', sessionController.endSession);
-router.post('/verify', sessionController.verifySession);
+router.get('/verify', sessionController.verifySession);
 
 module.exports = router;
